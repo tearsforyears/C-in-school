@@ -11,7 +11,7 @@ int max(int a,int b){
 	return a>b?a:b;
 }
 int main(){
-	char * str1="xzyzzys"; 
+	char * str1="xzyzzyx"; 
 	char * str2="zxyyzxz";
 	//init
 	int lis[len1]={0};
