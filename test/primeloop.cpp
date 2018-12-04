@@ -8,7 +8,7 @@ void printloop(){
 	cout<<endl;
 }
 bool is_prime(int num){
-	for(int i=2;i<sqrt(num);i++){
+	for(int i=2;i<sqrt(num)+1;i++){
 		if(num%i==0)return false;
 	}
 	return true;
@@ -25,7 +25,7 @@ bool judge(int cur,int num){
 	return true;
 }
 void dfs(int cur){
-	for(int i=0;i<n;i++){
+	for(int i=1;i<=n;i++){
 		if(cur<n){
 			if(judge(cur,i)){
 				loop[cur]=i;
