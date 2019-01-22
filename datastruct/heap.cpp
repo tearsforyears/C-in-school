@@ -1,6 +1,5 @@
 #include<iostream>
 #include<stdlib.h>
-#include<math.h>
 using namespace std;
 #define MAX_HEAP_LENGTH 100
 #define INVAILD_ELEMENT -0xffffff 
@@ -30,12 +29,6 @@ void swap(int arr[],int a,int b){
 	arr[a]=arr[b];
 	arr[b]=temp;
 }
-/*
-	index for heap
-	parent(i) = floor((i - 1)/2)
-	left(i)   = 2i + 1
-	right(i)  = 2i + 2
-*/
 void shiftup(int index){//big root heap
 	//index=len(heap)
 	//the largest element should up
@@ -64,8 +57,8 @@ void shiftdown(int index){
 void shiftDown(int arr[],int l,int r){
 	int cur_index=l;
 	int shifted_element=arr[cur_index];
-	//一个括号引发的3小时的debug wtf 
-	while(cur_index<r && (arr[2*cur_index+1]>arr[2*cur_index+2]?arr[2*cur_index+1]:arr[2*cur_index+2])>shifted_element){
+	//一个括号引发的3小时的debug wtf
+	while(2*cur_index+2<r && (arr[2*cur_index+1]>arr[2*cur_index+2]?arr[2*cur_index+1]:arr[2*cur_index+2])>shifted_element){
 		//need to shiftdown
 		arr[cur_index]=arr[2*cur_index+1]>arr[2*cur_index+2]?arr[2*cur_index+1]:arr[2*cur_index+2];
 		cur_index=arr[2*cur_index+1]>arr[2*cur_index+2]?2*cur_index+1:2*cur_index+2;
@@ -84,19 +77,30 @@ void add(int data){
 	shiftup(len(heap)-1);
 }
 void buildHeap(int arr[]){
+	//nlogn 
 	for(int i=0;i<arr_len;i++)add(arr[i]);
 }
 
 void buildheap(int arr[]){
+	//n 
 	for(int i=0;i<arr_len;i++)heap[i]=arr[i];
 	for(int i=arr_len/2-1;i>=0;i--)shiftDown(heap,i,len(heap));
+}
+void heapSort(int arr[]){
+    for(int i=arr_len/2-1;i>=0;i--){
+    	shiftDown(arr,i,arr_len);
+    }
+    for(int i=arr_len-1;i>=1;i--){
+    	swap(arr,0,i);
+	    shiftDown(arr,0,i);
+	}
+
 }
 int main(){
 	init(heap);
 	int arr[arr_len]={49,38,65,97,76,13,27,49};
-	buildheap(arr);
-	print(heap);
-	del();
+	for(int i=0;i<arr_len;i++)heap[i]=arr[i];
+	heapSort(heap);
 	print(heap);
 	return 0;
 }
