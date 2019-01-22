@@ -25,13 +25,12 @@ void append(LinkedList* lis,int data){
 	}
 }
 void travel(LinkedList* lis){
-	if(lis->next==NULL){
-		cout<<endl;
-		return;
-	}else{
-		cout<<lis->data<<",";
-		travel(lis->next);
+	LinkedList* temp=lis;
+	while(temp->next!=NULL){
+		cout<<temp->data<<",";
+		temp=temp->next;
 	}
+	cout<<endl;
 }
 void travel_inv(LinkedList* lis){
 	if(lis->next==NULL){
@@ -82,16 +81,6 @@ LinkedList* del(LinkedList* lis,int pos){
 		return lis;
 	}
 }
-LinkedList* inverse(LinkedList* lis){
-	LinkedList* p=lis;
-	LinkedList* new_list=init();
-	while(p->next!=NULL){
-		new_list=insert(new_list,p->data,0);
-		p=p->next;
-	}
-	return new_list;
-		
-}
 LinkedList* delete_from_back_v1(LinkedList* lis,int back){
 	return del(lis,len(lis)-back);
 }
@@ -101,6 +90,7 @@ LinkedList* getLastNode(LinkedList* a){
 	return node;
 }
 LinkedList* mergeLinkedList(LinkedList* a,LinkedList* b){
+	//the core of merge sort 
 	LinkedList* point1=a;
 	LinkedList* point2=b;
 	LinkedList* new_list = init();
@@ -120,19 +110,40 @@ LinkedList* mergeLinkedList(LinkedList* a,LinkedList* b){
 	}
 	return new_list;
 }
+/*
+LinkedList* inverse(LinkedList* lis){
+	LinkedList* p=lis;
+	LinkedList* new_list=init();
+	while(p->next!=NULL){
+		new_list=insert(new_list,p->data,0);
+		p=p->next;
+	}
+	return new_list;	
+}*/
+LinkedList* inverse(LinkedList* lis){
+	LinkedList *prev=NULL;
+	LinkedList *temp=NULL; //only for cache
+	LinkedList *head=init();
+	head->next=lis;
+	while(head){
+		temp=head->next; //cache
+		head->next=prev;
+		prev=head;
+		head=temp;
+	}	
+	return prev->next;
+}
 int main(){
 	LinkedList* lis=init();
 	append(lis,1);
 	append(lis,2);
 	append(lis,4);
 	append(lis,8);
+	append(lis,6);
+	append(lis,9);
+	append(lis,11);
 	travel(lis);
-	LinkedList* arr=init();
-	append(arr,1);
-	append(arr,3);
-	append(arr,5);
-	append(arr,7);
-	travel(arr);
-	travel(mergeLinkedList(arr,lis));
+	lis=inverse(lis);
+	travel(lis);
 	return 0;
 }

@@ -120,9 +120,11 @@ void MaxHeapFixDown(int a[],int i,int k){//构建大根堆
 void heapSort(int a[]){
 	compare=0;
 	move=0;
+	//heap construct function 
     for(int i= n/2-1;i>=0;i--)
         MaxHeapFixDown(a,i,n);
-    for(int i=n-1;i>=1;i--){
+    //
+	for(int i=n-1;i>=1;i--){
         swap(a,i,0);
         move+=3;
         MaxHeapFixDown(a,0,i);
