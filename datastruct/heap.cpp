@@ -4,7 +4,7 @@
 using namespace std;
 #define MAX_HEAP_LENGTH 100
 #define INVAILD_ELEMENT -0xffffff 
-#define arr_len 6
+#define arr_len 8
 int heap[MAX_HEAP_LENGTH];
 int maxarg(int a,int b){
 	return heap[a]>heap[b]?a:b;
@@ -61,6 +61,17 @@ void shiftdown(int index){
 	}
 	heap[cur_index]=shifted_element;
 }
+void shiftDown(int arr[],int l,int r){
+	int cur_index=l;
+	int shifted_element=arr[cur_index];
+	//一个括号引发的3小时的debug wtf 
+	while(cur_index<r && (arr[2*cur_index+1]>arr[2*cur_index+2]?arr[2*cur_index+1]:arr[2*cur_index+2])>shifted_element){
+		//need to shiftdown
+		arr[cur_index]=arr[2*cur_index+1]>arr[2*cur_index+2]?arr[2*cur_index+1]:arr[2*cur_index+2];
+		cur_index=arr[2*cur_index+1]>arr[2*cur_index+2]?2*cur_index+1:2*cur_index+2;
+	}
+	arr[cur_index]=shifted_element;
+}
 int del(){
 	int data=heap[0];
 	heap[0]=heap[len(heap)-1];
@@ -75,16 +86,17 @@ void add(int data){
 void buildHeap(int arr[]){
 	for(int i=0;i<arr_len;i++)add(arr[i]);
 }
+
 void buildheap(int arr[]){
-	for(int i=arr_len/2;i>=0;i--)shiftdown(i);
+	for(int i=0;i<arr_len;i++)heap[i]=arr[i];
+	for(int i=arr_len/2-1;i>=0;i--)shiftDown(heap,i,len(heap));
 }
 int main(){
 	init(heap);
-	int arr[arr_len]={10,7,2,5,1,16};
-	buildHeap(arr);
-	add(18);
+	int arr[arr_len]={49,38,65,97,76,13,27,49};
+	buildheap(arr);
 	print(heap);
-	delete []arr;
 	del();
+	print(heap);
 	return 0;
 }
